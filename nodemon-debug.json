@@ -1,0 +1,6 @@
+{
+  "watch": ["src", "views"],
+  "ext": "ts,hbs",
+  "ignore": ["src/**/*.spec.ts"],
+  "exec": "nest start --watch"
+}

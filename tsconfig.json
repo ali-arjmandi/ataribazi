@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "target": "es2017",
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "outDir": "./dist",
+    "baseUrl": "./src",
+    "paths": {
+      "@common/*": ["common/*"],
+      "@modules/*": ["modules/*"],
+      "@database/*": ["database/*"],
+      "@shared/*": ["shared/*"],
+      "@decorators/*": ["decorators/*"],
+      "@providers/*": ["providers/*"],
+      "@user/*": ["modules/user/*"],
+      "@customer/*": ["modules/customer/*"],
+      "@validators/*": ["validators/*"]
+    },
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
+}
