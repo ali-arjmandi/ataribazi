@@ -9,12 +9,16 @@ export class GeneralController {
   @Get()
   @Render('home')
   async root() {
-    return { data: await this.service.tags() };
+    return {
+      games: await this.service.homePageGames(),
+    };
   }
 
-  @Get('/about')
-  @Render('about')
-  about() {
-    return { title: 'About Page' };
+  @Get('/games')
+  @Render('tags')
+  async tags() {
+    return {
+      tags: await this.service.tags(),
+    };
   }
 }

@@ -8,4 +8,8 @@ export class GeneralService {
   async tags() {
     return this.arcadeSpotService.tags();
   }
+
+  async homePageGames() {
+    return this.arcadeSpotService.homePageGames();
+  }
 }
