@@ -1,0 +1,20 @@
+
+==================== PAGINATION
+</br>
+{{> pagination}}
+</br>
+======================</br>
+==================== GAMES
+{{#each games}}
+  <p>
+    <span> {{this.name}} </span>
+    <a href='{{this.url}}'>
+      <img src='{{this.image}}' />
+    </a>
+  </p>
+{{/each}}
+======================</br>==================== PAGINATION
+</br>
+{{> pagination}}
+</br>
+======================

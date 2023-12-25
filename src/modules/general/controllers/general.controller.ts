@@ -1,4 +1,4 @@
-import { Controller, Get, Render } from '@nestjs/common';
+import { Controller, Get, Param, Redirect, Render } from '@nestjs/common';
 
 import { GeneralService } from '../services/general.service';
 
@@ -14,11 +14,33 @@ export class GeneralController {
     };
   }
 
+  @Get('clear-cache')
+  @Redirect('/')
+  clearCache() {
+    this.service.clearCache();
+
+    return '';
+  }
+
   @Get('/games')
   @Render('tags')
   async tags() {
     return {
       tags: await this.service.tags(),
+    };
+  }
+
+  @Get(['/games/:tagSlug', '/games/:tagSlug/page/:page'])
+  @Render('games')
+  async tagFirstPage(
+    @Param('tagSlug') tagSlug: string,
+    @Param('page') page: string,
+  ) {
+    const { games, pagination } = await this.service.tag(tagSlug, page);
+
+    return {
+      games,
+      pagination,
     };
   }
 }

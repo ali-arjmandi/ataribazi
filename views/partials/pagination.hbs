@@ -1,0 +1,13 @@
+{{#ifExist pagination.prevPageUrl}}
+  <a href='{{pagination.prevPageUrl}}'>
+    Prev
+  </a>
+{{/ifExist}}
+{{#ifAllExist pagination.prevPageUrl pagination.nextPageUrl}}
+  -
+{{/ifAllExist}}
+{{#ifExist pagination.nextPageUrl}}
+  <a href='{{pagination.nextPageUrl}}'>
+    Next
+  </a>
+{{/ifExist}}

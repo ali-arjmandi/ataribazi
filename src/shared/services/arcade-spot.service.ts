@@ -1,29 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { HomePageGameDto } from '@shared/dto/home-page-game.dto';
+import { PaginationDto } from '@shared/dto/pagination.dto';
 import { TagDto } from '@shared/dto/tag.dto';
 import * as cheerio from 'cheerio';
-import puppeteer from 'puppeteer-extra';
-import pluginStealth from 'puppeteer-extra-plugin-stealth';
+
+import { BrowserManager } from './browser-manager.service';
 
 @Injectable()
 export class ArcadeSpotService {
   url = 'https://arcadespot.com';
 
-  async getHtml(url: string) {
-    puppeteer.use(pluginStealth());
-
-    return puppeteer.launch({ headless: 'new' }).then(async (browser) => {
-      const page = await browser.newPage();
-      await page.goto(url);
-      const html = await page.content();
-      await browser.close();
-
-      return html;
-    });
-  }
+  constructor(private readonly browserManager: BrowserManager) {}
 
   async tags(): Promise<TagDto[]> {
-    const html = await this.getHtml(`${this.url}/games`);
+    const html = await this.browserManager.getHtml(`${this.url}/games`);
     const $ = cheerio.load(html);
     const data = $('.as-tags-list')[0].cloneNode(true).childNodes;
 
@@ -39,8 +29,63 @@ export class ArcadeSpotService {
     });
   }
 
+  async tag(
+    tagSlug: string,
+    page?: string,
+  ): Promise<{ games: TagDto[]; pagination: PaginationDto }> {
+    const html = await this.browserManager.getHtml(
+      `${this.url}/games/${tagSlug}${page ? '/page/' + page : ''}`,
+    );
+    const $ = cheerio.load(html);
+    const gameData = $('.as-game-list')[0].cloneNode(true).childNodes;
+
+    const games = gameData
+      .map((li: any) => {
+        const url = li.children[0].attribs?.href?.split(this.url)[1];
+
+        if (!url) {
+          return;
+        }
+
+        const item = li.children[0].children;
+
+        return {
+          image: item[0].attribs['data-src'],
+          name: item[1].data,
+          url,
+        };
+      })
+      .filter((item) => Boolean(item));
+
+    const paginationData = $('.pagination')[0];
+    const activeChildren: any = $(paginationData).find('.active');
+    const currentPage = activeChildren[0]?.firstChild?.firstChild?.data;
+    const nextElementAfterActive = activeChildren.next();
+    const hasNext =
+      nextElementAfterActive.length > 0 &&
+      nextElementAfterActive[0].firstChild.name === 'a';
+    const nextPageUrl = hasNext
+      ? nextElementAfterActive[0].firstChild.attribs.href.split(this.url)[1]
+      : null;
+    const prevElementAfterActive = activeChildren.prev();
+    const hasPrev =
+      prevElementAfterActive.length > 0 &&
+      prevElementAfterActive[0].firstChild.name === 'a';
+    const prevPageUrl = hasPrev
+      ? prevElementAfterActive[0].firstChild.attribs.href.split(this.url)[1]
+      : null;
+
+    const pagination: PaginationDto = {
+      currentPage,
+      nextPageUrl,
+      prevPageUrl,
+    };
+
+    return { games, pagination };
+  }
+
   async homePageGames(): Promise<HomePageGameDto[]> {
-    const html = await this.getHtml(`${this.url}`);
+    const html = await this.browserManager.getHtml(`${this.url}`);
     const $ = cheerio.load(html);
     const data = $('.as-game-list')[0].cloneNode(true).childNodes;
     const result = [];
@@ -65,5 +110,9 @@ export class ArcadeSpotService {
     }
 
     return result;
+  }
+
+  clearCache() {
+    return this.browserManager.clearCache();
   }
 }
