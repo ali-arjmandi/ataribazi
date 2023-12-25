@@ -21,7 +21,13 @@ export class BrowserManager implements OnModuleInit {
   async onModuleInit() {
     if (!BrowserManager.instance) {
       puppeteer.use(pluginStealth());
-      BrowserManager.instance = await puppeteer.launch({ headless: 'new' });
+      BrowserManager.instance = await puppeteer.launch({
+        headless: 'new',
+        defaultViewport: {
+          height: 300,
+          width: 400,
+        },
+      });
       this.loadCacheFromFile();
     }
   }
@@ -74,10 +80,41 @@ export class BrowserManager implements OnModuleInit {
 
     const browser = this.getBrowser();
     const page = await browser.newPage();
-    await page.goto(url);
+    await page.goto(url, { waitUntil: 'domcontentloaded' });
     const html = await page.content();
     await page.close();
 
+    this.cache.set(url, {
+      html,
+      timestamp: Date.now(),
+      timeout: hasShortCache ? this.shortCacheTimeout : this.longCacheTimeout,
+    });
+    this.saveCacheToFile();
+
+    return html;
+  }
+
+  async getWithGameIframe(url: string, hasShortCache = false) {
+    if (this.cache.has(url)) {
+      const cachedPage = this.cache.get(url);
+
+      if (
+        !cachedPage.timeout ||
+        Date.now() - cachedPage.timestamp <= cachedPage.timeout
+      ) {
+        return cachedPage.html;
+      }
+
+      this.cache.delete(url);
+    }
+
+    const browser = this.getBrowser();
+    const page = await browser.newPage();
+    await page.goto(url, { waitUntil: 'domcontentloaded' });
+    await page.click('#as-play-btn');
+    await page.waitForSelector('#game-box-iframe');
+    const html = await page.content();
+    await page.close();
     this.cache.set(url, {
       html,
       timestamp: Date.now(),

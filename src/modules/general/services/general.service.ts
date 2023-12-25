@@ -17,6 +17,14 @@ export class GeneralService {
     return this.arcadeSpotService.tag(tagSlug, page);
   }
 
+  async game(gameSlug: string) {
+    return this.arcadeSpotService.game(gameSlug);
+  }
+
+  async search(text: string) {
+    return this.arcadeSpotService.search(text);
+  }
+
   async homePageGames() {
     return this.arcadeSpotService.homePageGames();
   }

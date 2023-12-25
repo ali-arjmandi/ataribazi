@@ -30,17 +30,34 @@ export class GeneralController {
     };
   }
 
+  @Get('/game/:gameSlug')
+  @Render('game')
+  async game(@Param('gameSlug') gameSlug: string) {
+    const game = await this.service.game(gameSlug);
+
+    return {
+      game,
+    };
+  }
+
   @Get(['/games/:tagSlug', '/games/:tagSlug/page/:page'])
   @Render('games')
-  async tagFirstPage(
-    @Param('tagSlug') tagSlug: string,
-    @Param('page') page: string,
-  ) {
+  async games(@Param('tagSlug') tagSlug: string, @Param('page') page: string) {
     const { games, pagination } = await this.service.tag(tagSlug, page);
 
     return {
       games,
+      tagTitle: tagSlug,
       pagination,
+    };
+  }
+
+  @Get('/search/:search')
+  @Render('search')
+  async search(@Param('search') search: string) {
+    return {
+      searchTitle: search,
+      games: await this.service.search(search),
     };
   }
 }

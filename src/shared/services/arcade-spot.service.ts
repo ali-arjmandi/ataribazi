@@ -84,6 +84,47 @@ export class ArcadeSpotService {
     return { games, pagination };
   }
 
+  async game(gameSlug: string) {
+    const html = await this.browserManager.getWithGameIframe(
+      `${this.url}/game/${gameSlug}`,
+    );
+    const $: any = cheerio.load(html);
+    const title = $('.as-main-title')[0].firstChild.data;
+    const iframe = $('#game-box-iframe')[0].attribs.src;
+
+    return {
+      title,
+      iframe,
+    };
+  }
+
+  async search(text: string): Promise<TagDto[]> {
+    const html = await this.browserManager.getHtml(
+      `${this.url}/search/?term=${text}`,
+      true,
+    );
+    const $ = cheerio.load(html);
+    const gameData = $('.as-game-list')[0].cloneNode(true).childNodes;
+
+    return gameData
+      .map((li: any) => {
+        const url = li.children[0].attribs?.href?.split(this.url)[1];
+
+        if (!url) {
+          return;
+        }
+
+        const item = li.children[0].children;
+
+        return {
+          image: item[0].attribs['data-src'],
+          name: item[1].data,
+          url,
+        };
+      })
+      .filter((item) => Boolean(item));
+  }
+
   async homePageGames(): Promise<HomePageGameDto[]> {
     const html = await this.browserManager.getHtml(`${this.url}`);
     const $ = cheerio.load(html);
