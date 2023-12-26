@@ -5,7 +5,9 @@ import {
   Query,
   Redirect,
   Render,
+  Res,
 } from '@nestjs/common';
+import { Response } from 'express';
 
 import { GeneralService } from '../services/general.service';
 
@@ -18,6 +20,7 @@ export class GeneralController {
   async root() {
     return {
       games: await this.service.homePageGames(),
+      headerTags: await this.service.headerTags(),
     };
   }
 
@@ -34,6 +37,7 @@ export class GeneralController {
   async tags() {
     return {
       tags: await this.service.tags(),
+      headerTags: await this.service.headerTags(),
     };
   }
 
@@ -44,6 +48,7 @@ export class GeneralController {
 
     return {
       game,
+      headerTags: await this.service.headerTags(),
     };
   }
 
@@ -56,15 +61,21 @@ export class GeneralController {
       games,
       tagTitle: tagSlug,
       pagination,
+      headerTags: await this.service.headerTags(),
     };
   }
 
   @Get('/search')
   @Render('search')
-  async search(@Query('text') text: string) {
+  async search(@Query('text') text: string, @Res() res: Response) {
+    if (!text) {
+      res.redirect('/');
+    }
+
     return {
       searchTitle: text,
       games: await this.service.search(text),
+      headerTags: await this.service.headerTags(),
     };
   }
 }

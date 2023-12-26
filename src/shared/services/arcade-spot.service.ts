@@ -51,7 +51,7 @@ export class ArcadeSpotService {
 
         return {
           image: item[0].attribs['data-src'],
-          name: item[1].data,
+          name: item[1].firstChild.data,
           url,
         };
       })
@@ -90,6 +90,24 @@ export class ArcadeSpotService {
     );
     const $: any = cheerio.load(html);
     const title = $('.as-main-title')[0].firstChild.data;
+    const image = $('.as-info-box-img')[0].firstChild.attribs.src;
+    const tags = $('[aria-label="Game Tags"]')[0].children.map((item) => ({
+      url: item.attribs.href.split(this.url)[1],
+      name: item.firstChild.data,
+    }));
+
+    const similarGames = [];
+
+    for (const item of $('.game-wrapper')[0].children.slice(1)) {
+      for (const game of item.firstChild.children) {
+        similarGames.push({
+          url: game.attribs.href.split(this.url)[1],
+          image: game.children[0].firstChild.attribs['data-src'],
+          name: game.children[1].firstChild.data,
+        });
+      }
+    }
+
     const iframeUrl = $('#game-box-iframe')[0].attribs.src;
     const width = Number(
       $('#game-box-iframe')[0].attribs.style.match(/width:\s*(\d+)/)[1],
@@ -102,6 +120,9 @@ export class ArcadeSpotService {
 
     return {
       title,
+      image,
+      tags,
+      similarGames,
       iframe: { url: iframeUrl, ratio },
     };
   }
@@ -135,12 +156,12 @@ export class ArcadeSpotService {
 
   async homePageGames(): Promise<HomePageGameDto[]> {
     const html = await this.browserManager.getHtml(`${this.url}`);
-    const $ = cheerio.load(html);
-    const data = $('.as-game-list')[0].cloneNode(true).childNodes;
+    const $: any = cheerio.load(html);
+    const data = $('.as-game-list')[0].children;
     const result = [];
 
     for (const li of data) {
-      let item = (li as any).children[0];
+      let item = li.children[0];
 
       if (item.children.length !== 3) {
         continue;
@@ -159,6 +180,18 @@ export class ArcadeSpotService {
     }
 
     return result;
+  }
+
+  async headerTags() {
+    const html = await this.browserManager.getHtml(`${this.url}`);
+    const $: any = cheerio.load(html);
+
+    return $('.main-nav')[0]
+      .children.slice(1, -4)
+      .map((item) => ({
+        name: item.firstChild.firstChild.firstChild.data,
+        url: item.firstChild.attribs.href.split(this.url)[1],
+      }));
   }
 
   clearCache() {

@@ -72153,6 +72153,8 @@ table > tbody > tr > td:first-child:before {
 /* line 174, src/assets/scss/components/blog-section/_blog-single.scss */
 .widget {
   margin-bottom: 50px;
+  direction: rtl;
+  font-family: 'Tanha';
 }
 
 /* line 177, src/assets/scss/components/blog-section/_blog-single.scss */
@@ -72197,12 +72199,14 @@ button,
 /* line 203, src/assets/scss/components/blog-section/_blog-single.scss */
 .widget .widget-title > h6 {
   text-transform: uppercase;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Tanha';
   letter-spacing: 1px;
   font-weight: 600;
   font-size: 12px;
   margin: 0;
   color: #5b5858;
+  text-align: right;
+  direction: rtl;
 }
 
 /* line 212, src/assets/scss/components/blog-section/_blog-single.scss */
@@ -72810,7 +72814,9 @@ body {
 
 /* line 5, src/assets/scss/trumps/_trumps.rtl-style.scss */
 .navbar-brand {
+  margin-top: 20px;
   margin-right: 0;
+  width: 60px;
 }
 
 /* line 9, src/assets/scss/trumps/_trumps.rtl-style.scss */

@@ -6,8 +6,8 @@
       <nav class='js-mega-menu navbar navbar-expand-md header-nav'>
 
         <!--logo start-->
-        <a class='navbar-brand pt-0' href='index.html'><img
-            src='/assets/img/logo-white.png'
+        <a class='navbar-brand pt-0' href='/'><img
+            src='/assets/img/atari-bazi-white.png'
             alt='logo'
             class='img-fluid'
           /></a>
@@ -33,21 +33,22 @@
           <ul class='navbar-nav ml-auto main-navbar-nav'>
 
             <li class='nav-item custom-nav-item'>
-              <a class='nav-link custom-nav-link' href='/games'>دسته بندی</a>
+              <a class='nav-link custom-nav-link' href='/'>خانه</a>
             </li>
 
-            <!--button start-->
-            <li class='nav-item header-nav-last-item d-flex align-items-center'>
-              <a
-                class='btn btn-brand-03 animated-btn'
-                href='https://whmcs.themetags.com/?systpl=kohost-professional'
-                target='_blank'
-              >
-                <span class='fa fa-user pr-2'></span>
-                Client Area
-              </a>
+            {{#each headerTags}}
+              <li class='nav-item custom-nav-item'>
+                <a
+                  class='nav-link custom-nav-link'
+                  href='{{this.url}}'
+                >{{this.name}}</a>
+              </li>
+            {{/each}}
+
+            <li class='nav-item custom-nav-item'>
+              <a class='nav-link custom-nav-link' href='/games'>همه</a>
             </li>
-            <!--button end-->
+
           </ul>
         </div>
         <!--main menu end-->

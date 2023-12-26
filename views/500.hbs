@@ -17,7 +17,7 @@
     />
 
     <!--title-->
-    <title>Kohost - Modern Web Hosting & WHMCS Template</title>
+    <title>500 Internal Server Error</title>
 
     <!--build:css-->
     <link rel='stylesheet' href='/assets/css/main-rtl.css' />
@@ -25,6 +25,7 @@
   </head>
 
   <body>
+
     <!--preloader start-->
     <div id='preloader'>
       <div class='preloader-wrap'>
@@ -43,13 +44,34 @@
     </div>
     <!--preloader end-->
 
-    {{> navbar}}
+    <div class='main'>
 
-    {{> header}}
+      <!--500 section start-->
+      <section class='ptb-100 bg-image full-height' data-overlay='8'>
+        <div
+          class='background-image-wraper'
+          style="background: url('/assets/img/404-cover.jpeg'); opacity: 1;"
+        ></div>
+        <div class='container'>
+          <div class='row align-items-center justify-content-center'>
+            <div class='col-md-9 col-lg-7'>
+              <div class='error-content-wrap text-center text-white'>
+                <div class='notfound-404'>
+                  <h1 class='text-white'>500</h1>
+                </div>
+                <h2 class='text-white'>یه چیزی یه جایی به مشکل خورد</h2>
+                <p class='lead'>خطا از سمت سرور رخ داده</p><a
+                  class='btn btn-brand-03'
+                  href='/'
+                >برو به خانه</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!--500 section end-->
 
-    {{{body}}}
-
-    {{> footer}}
+    </div>
 
     <!--scroll bottom to top button start-->
     <div
@@ -75,4 +97,5 @@
     <script src='/assets/js/app.js'></script>
     <!--endbuild-->
   </body>
+
 </html>

@@ -3,6 +3,19 @@ import { ArcadeSpotService } from '@shared/services/arcade-spot.service';
 
 @Injectable()
 export class GeneralService {
+  tagTranslate = {
+    Action: 'اکشن',
+    Adventure: 'ماجراجویی',
+    Arcade: 'آرکید',
+    Multiplayer: 'چند نفره',
+    Mobile: 'موبایل',
+    Puzzle: 'پازل',
+    Racing: 'مسابقه‌ای',
+    Shooting: 'تیراندازی',
+    Sports: 'ورزشی',
+    Strategy: 'استراتژی',
+  };
+
   constructor(private readonly arcadeSpotService: ArcadeSpotService) {}
 
   async tags() {
@@ -27,6 +40,18 @@ export class GeneralService {
 
   async homePageGames() {
     return this.arcadeSpotService.homePageGames();
+  }
+
+  async headerTags() {
+    const tags = await this.arcadeSpotService.headerTags();
+
+    for (const tag of tags) {
+      if (Object.keys(this.tagTranslate).includes(tag.name)) {
+        tag.name = this.tagTranslate[tag.name];
+      }
+    }
+
+    return tags;
   }
 
   clearCache() {
