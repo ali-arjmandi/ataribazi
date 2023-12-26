@@ -27,6 +27,7 @@ export class BrowserManager implements OnModuleInit {
           height: 300,
           width: 400,
         },
+        args: ['--no-sandbox'],
       });
       this.loadCacheFromFile();
     }
