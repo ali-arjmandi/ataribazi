@@ -1,10 +1,38 @@
 
-==================== PAGINATION
-</br>
-{{> pagination}}
-</br>
-======================</br>
-==================== GAMES
+<!--gaming services section start-->
+<section class='appliction-hosting ptb-100'>
+  <div class='container'>
+    <div class='row justify-content-center'>
+      <div class='col-md-9 col-lg-8'>
+        <div class='section-heading text-center'>
+          <h2>{{tagTitle}}</h2>
+          <p class='lead'>صفحه {{pagination.currentPage}}</p>
+        </div>
+      </div>
+    </div>
+    <div class='row'>
+      {{#each games}}
+        <div class='col-md-4 col-lg-3 mt-4'>
+          <div class='single-game-hosting'>
+            <span class='img-overlay'></span>
+            <img src='{{this.image}}' alt='game' class='img-fluid' />
+            <div class='game-hosting-name'>
+              <h3 class='mb-0 h6'>{{this.name}}</h3>
+              <a
+                href='{{this.url}}'
+                class='btn btn-brand-03 btn-sm btn-block'
+              >بازی کن</a>
+            </div>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+    {{> pagination}}
+  </div>
+</section>
+<!--gaming services section end-->
+
+{{!-- ==================== GAMES
 <br>
 {{tagTitle}}
 <br>
@@ -18,6 +46,4 @@
 {{/each}}
 ======================</br>==================== PAGINATION
 </br>
-{{> pagination}}
-</br>
-======================
+====================== --}}

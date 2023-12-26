@@ -1,13 +1,20 @@
-{{#ifExist pagination.prevPageUrl}}
-  <a href='{{pagination.prevPageUrl}}'>
-    Prev
-  </a>
-{{/ifExist}}
-{{#ifAllExist pagination.prevPageUrl pagination.nextPageUrl}}
-  -
-{{/ifAllExist}}
-{{#ifExist pagination.nextPageUrl}}
-  <a href='{{pagination.nextPageUrl}}'>
-    Next
-  </a>
-{{/ifExist}}
+<div
+  class='pagination d-flex align-items-center justify-content-center px-5 py-4 mt-4 position-relative z-index'
+>
+  {{#ifExist pagination.prevPageUrl}}
+    <div class='offer-btn text-white mx-5'>
+      <a
+        href='{{pagination.prevPageUrl}}'
+        class='btn btn-brand-03 offer-link'
+      >قبلی</a>
+    </div>
+  {{/ifExist}}
+  {{#ifExist pagination.nextPageUrl}}
+    <div class='offer-btn text-white mx-5'>
+      <a
+        href='{{pagination.nextPageUrl}}'
+        class='btn btn-brand-03 offer-link'
+      >بعدی</a>
+    </div>
+  {{/ifExist}}
+</div>

@@ -114,11 +114,11 @@ export class ArcadeSpotService {
           return;
         }
 
-        const item = li.children[0].children;
+        const item = li.firstChild.children;
 
         return {
           image: item[0].attribs['data-src'],
-          name: item[1].data,
+          name: item[1].firstChild.data,
           url,
         };
       })

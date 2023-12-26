@@ -1,3 +1,33 @@
+<!--gaming services section start-->
+<section class='appliction-hosting ptb-100'>
+  <div class='container'>
+    <div class='row justify-content-center'>
+      <div class='col-md-9 col-lg-8'>
+        <div class='section-heading text-center'>
+          <h2>دسته بندی‌ها</h2>
+        </div>
+      </div>
+    </div>
+    <div class='row'>
+      {{#each tags}}
+        <div class='col-md-3 col-lg-2 mt-3'>
+          <div class='single-game-hosting'>
+            <span class='img-overlay'></span>
+            <img src='{{this.image}}' alt='game' class='img-fluid' />
+            <div class='game-hosting-name'>
+              <h3 class='mb-0 h6'>{{this.name}}</h3>
+              <a
+                href='{{this.url}}'
+                class='btn btn-brand-03 btn-sm btn-block'
+              >بازی‌ها</a>
+            </div>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+</section>
+<!--gaming services section end-->
 ==================== TAGS
 {{#each tags}}
   <p>

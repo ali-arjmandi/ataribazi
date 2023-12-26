@@ -1,25 +1,59 @@
-<nav class='navbar navbar-expand-lg navbar-light bg-light'>
-  <a class='navbar-brand' href='/'>Ataribazi</a>
-  <button
-    class='navbar-toggler'
-    type='button'
-    data-toggle='collapse'
-    data-target='#navbarSupportedContent'
-    aria-controls='navbarSupportedContent'
-    aria-expanded='false'
-    aria-label='Toggle navigation'
-  >
-    <span class='navbar-toggler-icon'></span>
-  </button>
+<!--header section start-->
+<header id='header' class='header-main'>
+  <!--main header menu start-->
+  <div id='logoAndNav' class='main-header-menu-wrap bg-transparent fixed-top'>
+    <div class='container'>
+      <nav class='js-mega-menu navbar navbar-expand-md header-nav'>
 
-  <div class='collapse navbar-collapse' id='navbarSupportedContent'>
-    <ul class='navbar-nav mr-auto'>
-      <li class='nav-item'>
-        <a class='nav-link' href='/'>Home</a>
-      </li>
-      <li class='nav-item'>
-        <a class='nav-link' href='/games'>Tags</a>
-      </li>
-    </ul>
+        <!--logo start-->
+        <a class='navbar-brand pt-0' href='index.html'><img
+            src='/assets/img/logo-white.png'
+            alt='logo'
+            class='img-fluid'
+          /></a>
+        <!--logo end-->
+
+        <!--responsive toggle button start-->
+        <button
+          type='button'
+          class='navbar-toggler btn'
+          aria-expanded='false'
+          aria-controls='navBar'
+          data-toggle='collapse'
+          data-target='#navBar'
+        >
+          <span id='hamburgerTrigger'>
+            <span class='ti-menu'></span>
+          </span>
+        </button>
+        <!--responsive toggle button end-->
+
+        <!--main menu start-->
+        <div id='navBar' class='collapse navbar-collapse'>
+          <ul class='navbar-nav ml-auto main-navbar-nav'>
+
+            <li class='nav-item custom-nav-item'>
+              <a class='nav-link custom-nav-link' href='/games'>دسته بندی</a>
+            </li>
+
+            <!--button start-->
+            <li class='nav-item header-nav-last-item d-flex align-items-center'>
+              <a
+                class='btn btn-brand-03 animated-btn'
+                href='https://whmcs.themetags.com/?systpl=kohost-professional'
+                target='_blank'
+              >
+                <span class='fa fa-user pr-2'></span>
+                Client Area
+              </a>
+            </li>
+            <!--button end-->
+          </ul>
+        </div>
+        <!--main menu end-->
+      </nav>
+    </div>
   </div>
-</nav>
+  <!--main header menu end-->
+</header>
+<!--header section end-->

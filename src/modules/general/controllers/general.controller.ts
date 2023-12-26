@@ -1,4 +1,11 @@
-import { Controller, Get, Param, Redirect, Render } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Query,
+  Redirect,
+  Render,
+} from '@nestjs/common';
 
 import { GeneralService } from '../services/general.service';
 
@@ -52,12 +59,12 @@ export class GeneralController {
     };
   }
 
-  @Get('/search/:search')
+  @Get('/search')
   @Render('search')
-  async search(@Param('search') search: string) {
+  async search(@Query('text') text: string) {
     return {
-      searchTitle: search,
-      games: await this.service.search(search),
+      searchTitle: text,
+      games: await this.service.search(text),
     };
   }
 }
