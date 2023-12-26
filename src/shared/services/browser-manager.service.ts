@@ -22,7 +22,7 @@ export class BrowserManager implements OnModuleInit {
     if (!BrowserManager.instance) {
       puppeteer.use(pluginStealth());
       BrowserManager.instance = await puppeteer.launch({
-        headless: false,
+        headless: 'new',
         defaultViewport: {
           height: 300,
           width: 400,

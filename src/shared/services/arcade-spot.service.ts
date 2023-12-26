@@ -90,11 +90,19 @@ export class ArcadeSpotService {
     );
     const $: any = cheerio.load(html);
     const title = $('.as-main-title')[0].firstChild.data;
-    const iframe = $('#game-box-iframe')[0].attribs.src;
+    const iframeUrl = $('#game-box-iframe')[0].attribs.src;
+    const width = Number(
+      $('#game-box-iframe')[0].attribs.style.match(/width:\s*(\d+)/)[1],
+    );
+    const height = Number(
+      $('#game-box-iframe')[0].attribs.style.match(/height:\s*(\d+)/)[1],
+    );
+
+    const ratio = `${width} / ${height}`;
 
     return {
       title,
-      iframe,
+      iframe: { url: iframeUrl, ratio },
     };
   }
 
