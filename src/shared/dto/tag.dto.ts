@@ -1,7 +1,7 @@
 export class TagDto {
   name: string;
 
-  image: string;
+  image?: string;
 
   url: string;
 }

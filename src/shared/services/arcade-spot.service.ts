@@ -182,7 +182,7 @@ export class ArcadeSpotService {
     return result;
   }
 
-  async headerTags() {
+  async headerTags(): Promise<TagDto[]> {
     const html = await this.browserManager.getHtml(`${this.url}`);
     const $: any = cheerio.load(html);
 

@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { TagDto } from '@shared/dto/tag.dto';
 import { ArcadeSpotService } from '@shared/services/arcade-spot.service';
 
 @Injectable()
@@ -42,7 +43,7 @@ export class GeneralService {
     return this.arcadeSpotService.homePageGames();
   }
 
-  async headerTags() {
+  async headerTags(): Promise<TagDto[]> {
     const tags = await this.arcadeSpotService.headerTags();
 
     for (const tag of tags) {
